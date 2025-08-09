@@ -347,14 +347,6 @@ export default function CalorieCanvasApp() {
           <div>
             <h1 className="text-2xl font-extrabold tracking-tight">CalorieCalc</h1>
           </div>
-          <div className="space-x-2">
-            <button
-              className="bg-white/5 hover:bg-white/10 px-3 py-2 rounded-2xl text-sm"
-              onClick={() => setWeight((w) => Math.max(1, Math.round(w + (Math.random() * 10 - 5))))}
-            >
-              Refresh
-            </button>
-          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
