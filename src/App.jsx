@@ -320,7 +320,7 @@ export default function CalorieCanvasApp() {
 
   useEffect(() => {
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/public/sw.js')
+      navigator.serviceWorker.register('/sw.js')
         .then(registration => {
           registration.addEventListener('updatefound', () => {
             const newWorker = registration.installing;
