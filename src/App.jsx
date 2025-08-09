@@ -320,7 +320,9 @@ export default function CalorieCanvasApp() {
 
   useEffect(() => {
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js')
+      // Construct the correct path using Vite's base URL
+      const swUrl = `${import.meta.env.BASE_URL}sw.js`;
+      navigator.serviceWorker.register(swUrl)
         .then(registration => {
           registration.addEventListener('updatefound', () => {
             const newWorker = registration.installing;
