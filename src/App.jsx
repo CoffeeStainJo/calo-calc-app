@@ -11,10 +11,8 @@ export default function CalorieCanvasApp() {
   const [prot100, setProt100] = useState(31); // g per 100g
 
   const presets = [
-    { name: 'Corn cakes', cal: 400, fat: 1.8, carb: 64, prot: 7.4 },
-    // { name: 'Avocado', cal: 160, fat: 15, carb: 9, prot: 2 },
+    { name: 'Maize cake', cal: 400, fat: 1.8, carb: 64, prot: 7.4 },
     { name: 'Egg', cal: 149, fat: 10.60, carb: 0.3, prot: 13 },
-    { name: 'Olive oil (100g)', cal: 884, fat: 100, carb: 0, prot: 0 }
   ];
 
   // centralized macro color map so donut & bars match
