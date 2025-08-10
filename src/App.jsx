@@ -12,10 +12,17 @@ export default function CalorieCanvasApp() {
 
   const presets = [
     { name: 'Corn cakes', cal: 400, fat: 1.8, carb: 64, prot: 7.4 },
-    { name: 'Avocado', cal: 160, fat: 15, carb: 9, prot: 2 },
-    { name: 'Banana', cal: 89, fat: 0.3, carb: 23, prot: 1.1 },
+    // { name: 'Avocado', cal: 160, fat: 15, carb: 9, prot: 2 },
+    { name: 'Egg', cal: 149, fat: 10.60, carb: 0.3, prot: 13 },
     { name: 'Olive oil (100g)', cal: 884, fat: 100, carb: 0, prot: 0 }
   ];
+
+  // centralized macro color map so donut & bars match
+  const MACRO_COLORS = {
+    Fat: '#ff9f1c',
+    Carbs: '#06b6d4',
+    Protein: '#7c3aed'
+  };
 
   // Canvas refs
   const canvasRef = useRef(null);
@@ -186,21 +193,32 @@ export default function CalorieCanvasApp() {
     const visualsY = cardY + 60;
 
     // donut size scales with available rightWidth
-    const donutSize = Math.min(160, Math.max(80, rightWidth - 12));
+    // const donutSize = Math.min(160, Math.max(80, rightWidth - 12));
+    const donutSize = Math.min(80, Math.max(80, rightWidth - 12)); // slightly smaller
     const donutThickness = Math.max(28, Math.min(48, donutSize * 0.28));
     drawDonut(ctx, visualsX + (rightWidth - donutSize) / 2, visualsY, donutSize, donutThickness, progress);
 
     // center labels near donut
-    const centerX = visualsX + (rightWidth / 2);
-    const centerY = visualsY + donutSize / 2;
-    ctx.font = '600 14px system-ui';
-    ctx.fillStyle = '#e6fbff';
-    ctx.textAlign = 'center';
-    ctx.fillText(`${Math.round(caloriesFromMacros)} kcal`, centerX, centerY - 8);
-    ctx.font = '500 11px system-ui';
-    ctx.fillStyle = '#9feeff';
-    ctx.fillText(`${fatPct.toFixed(0)}% / ${carbPct.toFixed(0)}% / ${protPct.toFixed(0)}%`, centerX, centerY + 12);
-    ctx.textAlign = 'start';
+    // const centerX = visualsX + (rightWidth / 2);
+    // const centerY = visualsY + donutSize / 2;
+    // ctx.font = '600 14px system-ui';
+    // ctx.fillStyle = '#e6fbff';
+    // ctx.textAlign = 'center';
+    // ctx.fillText(`${Math.round(caloriesFromMacros)} kcal`, centerX, centerY - 8);
+    // ctx.font = '500 11px system-ui';
+    // ctx.fillStyle = '#9feeff';
+    // ctx.fillText(`${fatPct.toFixed(0)}% / ${carbPct.toFixed(0)}% / ${protPct.toFixed(0)}%`, centerX, centerY + 12);
+    // ctx.textAlign = 'start';
+    // center label near donut (kcal only)
+
+    //new
+    // const centerX = visualsX + (rightWidth / 2);
+    // const centerY = visualsY + donutSize / 2;
+    // ctx.font = '600 14px system-ui';
+    // ctx.fillStyle = '#e6fbff';
+    // ctx.textAlign = 'center';
+    // ctx.fillText(`${Math.round(caloriesFromMacros)} kcal`, centerX, centerY + 2);
+    // ctx.textAlign = 'start';
 
     // bars below donut
     const barX = visualsX + 6;
@@ -226,7 +244,8 @@ export default function CalorieCanvasApp() {
     }
 
     function drawDonut(ctx, x, y, size, thickness, progress) {
-      const colors = ['#ff9f1c', '#06b6d4', '#7c3aed'];
+      // const colors = ['#ff9f1c', '#06b6d4', '#7c3aed'];
+      const colors = [MACRO_COLORS.Fat, MACRO_COLORS.Carbs, MACRO_COLORS.Protein];
       const slices = [fatPct, carbPct, protPct];
       const cx = x + size / 2;
       const cy = y + size / 2;
@@ -281,6 +300,7 @@ export default function CalorieCanvasApp() {
       const barH = 16;
       ctx.font = '600 12px system-ui';
       ctx.fillStyle = '#c7f7ff';
+      // MACRO_COLORS[label];
       ctx.fillText(label, x, y + 12);
 
       // Reduce label width and adjust spacing
@@ -296,7 +316,8 @@ export default function CalorieCanvasApp() {
 
       // fill width with proper bounds checking
       const fillWidth = Math.max(2, Math.min((value / max) * barW * progress, barW));
-      ctx.fillStyle = label === 'Fat' ? '#ff9f1c' : label === 'Carbs' ? '#06b6d4' : '#7c3aed';
+      // ctx.fillStyle = label === 'Fat' ? '#ff9f1c' : label === 'Carbs' ? '#06b6d4' : '#7c3aed';
+      ctx.fillStyle = MACRO_COLORS[label];
       roundRect(ctx, barX + 2, y + 4, fillWidth - 4, barH - 4, 6);
       ctx.fill();
 
